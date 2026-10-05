@@ -1,4 +1,4 @@
-package com.renderai.dto;
+package com.renderai.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,9 +16,14 @@ public class RenderResponseDto {
     private Long taskId;
     private String status;
     private String finalPrompt;
-    private List<String> imageUrls;      // URL ảnh (nếu lưu cloud)
-    private List<String> base64Images;   // Base64 PNG từ Imagen 3 (hiển thị trực tiếp)
+    private List<String> imageUrls;
+    private List<String> base64Images;
     private String aiProvider;
     private Date createdAt;
+    private Long userId;
+    private String username;
+    private String userEmail;
+    private String originalImageUrl;
+    private String basePrompt;
     private String errorMessage;
 }

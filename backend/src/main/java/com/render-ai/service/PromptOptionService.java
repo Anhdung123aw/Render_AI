@@ -38,6 +38,21 @@ public class PromptOptionService {
         return PromptOptionGroupDto.builder().options(grouped).build();
     }
 
+    public PromptOptionDto createOption(PromptOptionDto dto) {
+        PromptOption option = PromptOption.builder()
+                .optionType(PromptOptionType.valueOf(dto.getOptionType()))
+                .displayName(dto.getDisplayName())
+                .promptValue(dto.getPromptValue())
+                .isActive(true)
+                .build();
+        PromptOption saved = promptOptionRepository.save(option);
+        return toDto(saved);
+    }
+
+    public void deleteOption(Long id) {
+        promptOptionRepository.deleteById(id);
+    }
+
     private PromptOptionDto toDto(PromptOption option) {
         return PromptOptionDto.builder()
                 .id(option.getId())
@@ -47,3 +62,4 @@ public class PromptOptionService {
                 .build();
     }
 }
+

@@ -1,4 +1,4 @@
-package com.renderai.dto;
+package com.renderai.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,5 +20,7 @@ public class RenderRequestDto {
     private String negativePrompt;     // Prompt loại trừ
     private String aspectRatio;        // "1:1", "16:9", "4:3"...
     private Integer numImages;         // Số lượng ảnh (1-4)
-    private String aiProvider;         // "FLUX" hoặc "OPENAI"
+    private String aiProvider;         // "FLUX" hoặc "OPENAI" hoặc "NANO_BANANA"
+    private String customFinalPrompt;  // Prompt cuối cùng do ADMIN trực tiếp chỉnh sửa
+    private String userRole;           // "ADMIN" hoặc "USER"
 }

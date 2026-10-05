@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { X, Calendar, Camera, Download, ExternalLink } from 'lucide-react';
 import { apiService } from '../services/api';
 
-export default function HistoryModal({ isOpen, onClose, onSelectImageForCamera }) {
+export default function HistoryModal({ isOpen, onClose, onSelectImageForCamera, userId = 1 }) {
   const [historyList, setHistoryList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -10,12 +10,12 @@ export default function HistoryModal({ isOpen, onClose, onSelectImageForCamera }
     if (isOpen) {
       loadHistory();
     }
-  }, [isOpen]);
+  }, [isOpen, userId]);
 
   const loadHistory = async () => {
     try {
       setIsLoading(true);
-      const data = await apiService.getRenderHistory(1);
+      const data = await apiService.getRenderHistory(userId);
       setHistoryList(data || []);
     } catch (err) {
       console.error('Lỗi khi tải lịch sử:', err);

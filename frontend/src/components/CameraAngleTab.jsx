@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Camera, X, Crop, Plus, Minus, Sparkles, UploadCloud, RefreshCw } from 'lucide-react';
+import { Camera, X, Crop, Plus, Minus, Sparkles, UploadCloud, RefreshCw, Crown } from 'lucide-react';
 import { apiService } from '../services/api';
 
 export default function CameraAngleTab({
@@ -7,10 +7,13 @@ export default function CameraAngleTab({
   onClearSelectedImage,
   onSubmitRender,
   isRendering,
+  currentUserRole = 'USER',
+  currentUserId,
+  onRequestAdminPreview,
 }) {
   const [activeImage, setActiveImage] = useState(selectedImageForCamera || null);
   const [selectedCameraAngle, setSelectedCameraAngle] = useState('high-angle');
-  const [customDescription, setCustomDescription] = useState('Chụp từ trên cao xuống (high-angle shot)');
+  const [customDescription, setCustomDescription] = useState('');
   const [isCropActive, setIsCropActive] = useState(false);
   const [numImages, setNumImages] = useState(1);
   const [aiProvider, setAiProvider] = useState('NANO_BANANA'); // 'NANO_BANANA' | 'FLUX'
@@ -99,7 +102,7 @@ export default function CameraAngleTab({
     }
 
     const payload = {
-      userId: 1,
+      userId: currentUserId || (currentUserRole === 'ADMIN' ? 21 : 22),
       originalImageUrl: activeImage.url || activeImage,
       styleImageUrl: null,
       basePrompt: `${customDescription}, architectural rendering, consistent building design, photorealistic, 8k, sharp focus`,
@@ -109,10 +112,15 @@ export default function CameraAngleTab({
       negativePrompt: 'distorted geometry, structural changes, blurry, cartoon, low quality, deformed facade',
       aspectRatio: '16:9',
       numImages: numImages,
-      aiProvider: aiProvider
+      aiProvider: aiProvider,
+      userRole: currentUserRole
     };
 
-    onSubmitRender(payload);
+    if (currentUserRole === 'ADMIN' && onRequestAdminPreview) {
+      onRequestAdminPreview(payload);
+    } else {
+      onSubmitRender(payload);
+    }
   };
 
   return (
@@ -293,12 +301,26 @@ export default function CameraAngleTab({
       <button
         type="submit"
         className="btn-submit-render"
+        style={currentUserRole === 'ADMIN' ? {
+          background: 'linear-gradient(135deg, #f59e0b 0%, #ea580c 100%)',
+          boxShadow: '0 4px 20px rgba(245, 158, 11, 0.4)'
+        } : undefined}
         disabled={isRendering || !activeImage}
       >
-        <Camera size={18} />
-        <span>{isRendering ? 'Đang Tạo Góc Camera...' : 'Tạo Ảnh'}</span>
+        {currentUserRole === 'ADMIN' ? (
+          <>
+            <Crown size={18} />
+            <span>{isRendering ? 'Đang Phân Tích Góc Máy...' : '👑 Xem & Tinh Chỉnh Prompt Góc Camera (Admin)'}</span>
+          </>
+        ) : (
+          <>
+            <Camera size={18} />
+            <span>{isRendering ? 'Đang Tạo Góc Camera...' : 'Tạo Ảnh'}</span>
+          </>
+        )}
       </button>
     </form>
   );
 }
+
 

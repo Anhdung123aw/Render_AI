@@ -39,6 +39,26 @@ export const apiService = {
     }
   },
 
+  // Tạo mới tùy chọn phong cách / bối cảnh / ánh sáng (Dành cho Admin)
+  async createPromptOption(payload) {
+    const res = await fetch(`${API_BASE}/api/prompt-options`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error('Không thể thêm tùy chọn mới');
+    return await res.json();
+  },
+
+  // Xóa tùy chọn (Dành cho Admin)
+  async deletePromptOption(id) {
+    const res = await fetch(`${API_BASE}/api/prompt-options/${id}`, {
+      method: 'DELETE',
+    });
+    if (!res.ok) throw new Error('Không thể xóa tùy chọn');
+    return await res.json();
+  },
+
   // Upload file ảnh lên backend Spring Boot
   async uploadImage(file) {
     const formData = new FormData();
@@ -91,5 +111,100 @@ export const apiService = {
     const res = await fetch(`${API_BASE}/api/render/history/${userId}`);
     if (!res.ok) throw new Error('Không thể tải lịch sử render');
     return await res.json();
+  },
+
+  // Lấy danh sách người dùng và phân quyền
+  async getUsers() {
+    try {
+      const res = await fetch(`${API_BASE}/api/users`);
+      if (!res.ok) return [];
+      return await res.json();
+    } catch (err) {
+      console.warn('Lỗi lấy danh sách users:', err);
+      return [];
+    }
+  },
+
+  // Đăng nhập hệ thống (Phân quyền Admin / User)
+  async login(username, password) {
+    const res = await fetch(`${API_BASE}/api/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+    });
+
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      throw new Error(data.message || 'Đăng nhập không thành công');
+    }
+    return data; // { success: true, user: { id, username, email, role } }
+  },
+
+  // Đăng ký tài khoản người dùng
+  async register(username, email, password) {
+    const res = await fetch(`${API_BASE}/api/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, email, password }),
+    });
+
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      throw new Error(data.message || 'Đăng ký không thành công');
+    }
+    return data;
+  },
+
+  // Dành riêng cho ADMIN: Lấy bản xem trước prompt cuối cùng để chỉnh sửa
+  async previewPrompt(payload) {
+    const res = await fetch(`${API_BASE}/api/render/preview-prompt`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.errorMessage || err.error || 'Không thể tạo bản xem trước Prompt');
+    }
+    const data = await res.json();
+    return {
+      finalPrompt: typeof data === 'string' ? data : (data.finalPrompt || '')
+    };
+  },
+
+  // Dành riêng cho ADMIN: Lấy tất cả tác vụ của các user để xem prompt và ảnh đã ren
+  async getAllTasksForAdmin() {
+    const res = await fetch(`${API_BASE}/api/render/admin/all-tasks`);
+    if (!res.ok) throw new Error('Không thể tải danh sách tác vụ của users');
+    return await res.json();
+  },
+
+  // Xóa 1 tác vụ render (card)
+  async deleteTask(taskId) {
+    const res = await fetch(`${API_BASE}/api/render/task/${taskId}`, {
+      method: 'DELETE',
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      throw new Error(data.message || 'Không thể xóa tác vụ #' + taskId);
+    }
+    return data;
+  },
+
+  // Xóa hàng loạt tác vụ render (cards)
+  async deleteTasksBatch(taskIds) {
+    const res = await fetch(`${API_BASE}/api/render/tasks/delete-batch`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(taskIds),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      throw new Error(data.message || 'Không thể xóa danh sách tác vụ');
+    }
+    return data;
   }
 };
+
+

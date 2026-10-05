@@ -1,17 +1,20 @@
 import React, { useRef, useState } from 'react';
-import { UploadCloud, X, Wand2, Sparkles, Image as ImageIcon, Plus, Minus } from 'lucide-react';
+import { UploadCloud, X, Wand2, Sparkles, Image as ImageIcon, Plus, Minus, Crown } from 'lucide-react';
 import { apiService } from '../services/api';
 
 export default function CreateRenderTab({
   promptOptions,
   onSubmitRender,
   isRendering,
+  currentUserRole = 'USER',
+  currentUserId,
+  onRequestAdminPreview,
 }) {
   // States
   const [originalImage, setOriginalImage] = useState(null); // File hoặc { url, preview }
   const [styleImage, setStyleImage] = useState(null);
-  const [basePrompt, setBasePrompt] = useState('Ảnh chụp thực tế ngôi nhà, phong cách hiện đại, nằm bên đường nhựa với 2 bên cạnh nhà là cây xanh, Ánh sáng ban ngày tự nhiên, trời trong xanh');
-  const [negativePrompt, setNegativePrompt] = useState('cartoon, 2d illustration, sketch, cgi, render artifact, fake render, unreal engine style, game asset, lowpoly, plastic surface, wax texture, flat lighting, incorrect reflections, overexposed, blurry, low quality');
+  const [basePrompt, setBasePrompt] = useState('');
+  const [negativePrompt, setNegativePrompt] = useState('');
 
   const [selectedStyle, setSelectedStyle] = useState('');
   const [selectedContext, setSelectedContext] = useState('');
@@ -85,7 +88,7 @@ export default function CreateRenderTab({
     }
 
     const payload = {
-      userId: 1,
+      userId: currentUserId || (currentUserRole === 'ADMIN' ? 21 : 22),
       originalImageUrl: originalImage?.url || null,
       styleImageUrl: styleImage?.url || null,
       basePrompt: basePrompt.trim(),
@@ -95,10 +98,17 @@ export default function CreateRenderTab({
       negativePrompt: negativePrompt.trim(),
       aspectRatio: aspectRatio,
       numImages: numImages,
-      aiProvider: aiProvider
+      aiProvider: aiProvider,
+      userRole: currentUserRole
     };
 
-    onSubmitRender(payload);
+    // Nếu là ADMIN: Kích hoạt modal xem trước & tinh chỉnh prompt cuối cùng trước khi render
+    if (currentUserRole === 'ADMIN' && onRequestAdminPreview) {
+      onRequestAdminPreview(payload);
+    } else {
+      // User thường: Gửi trực tiếp
+      onSubmitRender(payload);
+    }
   };
 
   const aspectList = [
@@ -318,6 +328,7 @@ export default function CreateRenderTab({
           rows={2}
           value={negativePrompt}
           onChange={(e) => setNegativePrompt(e.target.value)}
+          placeholder="Nhập yếu tố loại trừ: cartoon, mờ, biến dạng, chất lượng thấp..."
         />
       </div>
 
@@ -405,12 +416,26 @@ export default function CreateRenderTab({
       <button
         type="submit"
         className="btn-submit-render"
+        style={currentUserRole === 'ADMIN' ? {
+          background: 'linear-gradient(135deg, #f59e0b 0%, #ea580c 100%)',
+          boxShadow: '0 4px 20px rgba(245, 158, 11, 0.4)'
+        } : undefined}
         disabled={isRendering}
       >
-        <Sparkles size={18} />
-        <span>{isRendering ? 'Đang Khởi Tạo Render...' : 'Tạo Ảnh'}</span>
+        {currentUserRole === 'ADMIN' ? (
+          <>
+            <Crown size={18} />
+            <span>{isRendering ? 'Đang Phân Tích Prompt...' : '👑 Xem & Tinh Chỉnh Prompt Cuối Cùng (Admin)'}</span>
+          </>
+        ) : (
+          <>
+            <Sparkles size={18} />
+            <span>{isRendering ? 'Đang Khởi Tạo Render...' : 'Tạo Ảnh'}</span>
+          </>
+        )}
       </button>
     </form>
   );
 }
+
 
