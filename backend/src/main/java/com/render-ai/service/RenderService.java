@@ -85,6 +85,10 @@ public class RenderService {
         }
 
         // 4. Lưu RenderTask với status PROCESSING
+        String chosenProvider = (request.getAiProvider() != null && !request.getAiProvider().isBlank())
+                ? request.getAiProvider().toUpperCase()
+                : "FLUX";
+
         RenderTask task = RenderTask.builder()
                 .user(user)
                 .originalImageUrl(request.getOriginalImageUrl())
@@ -94,7 +98,7 @@ public class RenderService {
                 .negativePrompt(request.getNegativePrompt())
                 .aspectRatio(request.getAspectRatio())
                 .numImages(request.getNumImages() != null ? request.getNumImages() : 1)
-                .aiProvider("IMAGEN3")
+                .aiProvider(chosenProvider)
                 .status("PROCESSING")
                 .build();
         task = renderTaskRepository.save(task);
