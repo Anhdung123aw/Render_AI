@@ -54,19 +54,20 @@ export default function Header({
                 className={`nav-tab-btn ${isActive ? 'active' : ''}`}
                 style={isAdminTab ? {
                   background: isActive
-                    ? 'linear-gradient(135deg, rgba(245,158,11,0.35) 0%, rgba(234,88,12,0.25) 100%)'
-                    : 'linear-gradient(135deg, rgba(245,158,11,0.12) 0%, rgba(234,88,12,0.08) 100%)',
-                  borderColor: isActive ? '#f59e0b' : 'rgba(245,158,11,0.35)',
-                  color: isActive ? '#fbbf24' : 'rgba(251,191,36,0.8)',
-                  fontWeight: 800
+                    ? 'var(--primary-gradient)'
+                    : 'rgba(234, 88, 12, 0.08)',
+                  borderColor: isActive ? 'var(--primary)' : 'rgba(234, 88, 12, 0.25)',
+                  color: isActive ? '#ffffff' : '#ea580c',
+                  fontWeight: 800,
+                  boxShadow: isActive ? '0 2px 10px var(--primary-glow)' : 'none'
                 } : undefined}
                 onClick={() => setActiveTab(tab.id)}
               >
-                {Icon && <Icon size={15} color={isAdminTab ? (isActive ? '#fbbf24' : 'rgba(251,191,36,0.7)') : undefined} />}
+                {Icon && <Icon size={15} color={isAdminTab ? (isActive ? '#ffffff' : '#ea580c') : undefined} />}
                 <span>{tab.label}</span>
                 {tab.badge && (
                   <span className="nav-tab-badge" style={isAdminTab ? {
-                    background: 'linear-gradient(135deg, #f59e0b, #ea580c)',
+                    background: 'rgba(255, 255, 255, 0.25)',
                     color: '#fff',
                   } : undefined}>{tab.badge}</span>
                 )}
@@ -97,8 +98,9 @@ export default function Header({
               gap: '8px',
               padding: '4px 10px',
               borderRadius: '20px',
-              background: 'rgba(30, 41, 59, 0.7)',
+              background: '#ffffff',
               border: '1px solid var(--border-color)',
+              boxShadow: '0 1px 3px rgba(15, 23, 42, 0.04)',
             }}
           >
             <div
@@ -121,7 +123,7 @@ export default function Header({
               <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--text-main)', lineHeight: 1.2 }}>
                 {currentUser.username}
               </span>
-              <span style={{ fontSize: '10px', color: isAdmin ? '#fbbf24' : 'var(--text-dim)', fontWeight: 600 }}>
+              <span style={{ fontSize: '10px', color: isAdmin ? '#ea580c' : 'var(--text-dim)', fontWeight: 600 }}>
                 {isAdmin ? 'Quản trị viên' : 'Kiến trúc sư'}
               </span>
             </div>
@@ -131,16 +133,15 @@ export default function Header({
                 display: 'flex',
                 alignItems: 'center',
                 gap: '4px',
-                background: 'rgba(239, 68, 68, 0.15)',
-                border: '1px solid rgba(239, 68, 68, 0.35)',
-                color: '#f87171',
+                background: 'rgba(239, 68, 68, 0.08)',
+                border: '1px solid rgba(239, 68, 68, 0.25)',
+                color: '#ef4444',
                 padding: '4px 8px',
                 borderRadius: '6px',
                 fontSize: '11px',
                 fontWeight: 600,
                 cursor: 'pointer',
-                marginLeft: '6px',
-                transition: 'all 0.2s',
+                marginLeft: '4px',
               }}
               title="Đăng xuất khỏi hệ thống"
             >

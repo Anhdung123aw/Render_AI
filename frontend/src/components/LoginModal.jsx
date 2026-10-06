@@ -69,9 +69,9 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess, currentUse
         style={{
           width: '460px',
           maxWidth: '92vw',
-          backgroundColor: '#0f172a',
-          border: '1px solid rgba(249, 115, 22, 0.4)',
-          boxShadow: '0 20px 60px rgba(0, 0, 0, 0.7), 0 0 25px rgba(249, 115, 22, 0.15)',
+          backgroundColor: '#ffffff',
+          border: '1px solid #e2e8f0',
+          boxShadow: '0 20px 60px rgba(15, 23, 42, 0.15)',
           borderRadius: '16px',
           padding: '28px',
           position: 'relative',
@@ -86,14 +86,20 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess, currentUse
               position: 'absolute',
               top: '18px',
               right: '18px',
-              background: 'transparent',
-              border: 'none',
+              background: '#f1f5f9',
+              border: '1px solid #e2e8f0',
+              borderRadius: '8px',
+              width: '32px',
+              height: '32px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
               color: 'var(--text-dim)',
               cursor: 'pointer',
             }}
             title="Đóng"
           >
-            <X size={20} />
+            <X size={18} />
           </button>
         )}
 
@@ -104,8 +110,8 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess, currentUse
               display: 'inline-flex',
               padding: '10px',
               borderRadius: '12px',
-              background: 'linear-gradient(135deg, rgba(249, 115, 22, 0.2) 0%, rgba(234, 88, 12, 0.3) 100%)',
-              color: '#f97316',
+              background: 'rgba(234, 88, 12, 0.1)',
+              color: '#ea580c',
               marginBottom: '10px',
             }}
           >
@@ -125,10 +131,11 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess, currentUse
         <div
           style={{
             display: 'flex',
-            backgroundColor: 'rgba(15, 23, 42, 0.8)',
+            backgroundColor: '#f1f5f9',
             padding: '4px',
             borderRadius: '10px',
             marginBottom: '18px',
+            border: '1px solid #e2e8f0'
           }}
         >
           <button
@@ -140,10 +147,11 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess, currentUse
               fontWeight: 700,
               borderRadius: '8px',
               border: 'none',
-              background: tab === 'login' ? 'var(--accent-orange)' : 'transparent',
-              color: tab === 'login' ? '#ffffff' : 'var(--text-dim)',
+              background: tab === 'login' ? 'var(--primary)' : 'transparent',
+              color: tab === 'login' ? '#ffffff' : 'var(--text-muted)',
               cursor: 'pointer',
               transition: 'all 0.2s',
+              boxShadow: tab === 'login' ? '0 2px 6px var(--primary-glow)' : 'none'
             }}
             onClick={() => {
               setTab('login');
@@ -161,10 +169,11 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess, currentUse
               fontWeight: 700,
               borderRadius: '8px',
               border: 'none',
-              background: tab === 'register' ? 'var(--accent-orange)' : 'transparent',
-              color: tab === 'register' ? '#ffffff' : 'var(--text-dim)',
+              background: tab === 'register' ? 'var(--primary)' : 'transparent',
+              color: tab === 'register' ? '#ffffff' : 'var(--text-muted)',
               cursor: 'pointer',
               transition: 'all 0.2s',
+              boxShadow: tab === 'register' ? '0 2px 6px var(--primary-glow)' : 'none'
             }}
             onClick={() => {
               setTab('register');

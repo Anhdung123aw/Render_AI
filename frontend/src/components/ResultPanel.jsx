@@ -233,10 +233,10 @@ export default function ResultPanel({
             <Sparkles size={32} />
           </div>
           <div className="empty-title">Kết Quả Render</div>
-          <div className="empty-desc">
-            Kết quả phối cảnh kiến trúc sẽ xuất hiện ở đây sau khi bạn nhấn "Tạo Ảnh".
-            Sau khi render xong, bạn có thể dễ dàng chuyển ảnh sang tab <strong>Góc camera</strong> để tạo thêm các góc máy khác nhau!
-          </div>
+          {/*<div className="empty-desc">*/}
+          {/*  Kết quả phối cảnh kiến trúc sẽ xuất hiện ở đây sau khi bạn nhấn "Tạo Ảnh".*/}
+          {/*  Sau khi render xong, bạn có thể dễ dàng chuyển ảnh sang tab <strong>Góc camera</strong> để tạo thêm các góc máy khác nhau!*/}
+          {/*</div>*/}
         </div>
       </main>
     );

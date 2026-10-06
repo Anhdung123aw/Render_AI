@@ -142,9 +142,9 @@ export default function AdminDashboard({
       <div style={{
         width: '300px',
         minWidth: '280px',
-        borderRight: '1px solid rgba(245,158,11,0.2)',
+        borderRight: '1px solid var(--border-color)',
         overflowY: 'auto',
-        background: 'linear-gradient(180deg, #0b0f1a 0%, #0d1120 100%)',
+        background: '#ffffff',
         padding: '16px',
         display: 'flex',
         flexDirection: 'column',
@@ -153,8 +153,8 @@ export default function AdminDashboard({
 
         {/* Header Admin Panel */}
         <div style={{
-          background: 'linear-gradient(135deg, rgba(245,158,11,0.15) 0%, rgba(234,88,12,0.1) 100%)',
-          border: '1px solid rgba(245,158,11,0.3)',
+          background: 'linear-gradient(135deg, rgba(234,88,12,0.08) 0%, rgba(249,115,22,0.04) 100%)',
+          border: '1px solid rgba(234,88,12,0.25)',
           borderRadius: '12px',
           padding: '12px 14px',
           display: 'flex',
@@ -163,18 +163,18 @@ export default function AdminDashboard({
         }}>
           <div style={{
             width: '34px', height: '34px', borderRadius: '10px',
-            background: 'linear-gradient(135deg, #f59e0b, #ea580c)',
+            background: 'linear-gradient(135deg, #f97316, #ea580c)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            color: '#fff', boxShadow: '0 0 12px rgba(245,158,11,0.4)',
+            color: '#fff', boxShadow: '0 4px 12px rgba(234,88,12,0.25)',
             flexShrink: 0,
           }}>
             <Crown size={18} />
           </div>
           <div>
-            <div style={{ fontSize: '13px', fontWeight: 800, color: '#fbbf24', lineHeight: 1.2 }}>
+            <div style={{ fontSize: '13px', fontWeight: 800, color: '#ea580c', lineHeight: 1.2 }}>
               Admin Control Panel
             </div>
-            <div style={{ fontSize: '11px', color: 'rgba(251,191,36,0.6)' }}>
+            <div style={{ fontSize: '11px', color: 'var(--text-dim)' }}>
               Toàn quyền kiểm soát Prompt & Render
             </div>
           </div>
@@ -182,9 +182,9 @@ export default function AdminDashboard({
 
         {/* Upload Ảnh (Tùy chọn) */}
         <div className="control-section" style={{ gap: '8px' }}>
-          <span className="section-title" style={{ color: '#e2e8f0' }}>📁 Ảnh tham chiếu (Tùy chọn)</span>
+          <span className="section-title" style={{ color: 'var(--text-main)' }}>📁 Ảnh tham chiếu (Tùy chọn)</span>
           {originalImage ? (
-            <div style={{ position: 'relative', borderRadius: '10px', overflow: 'hidden', aspectRatio: '16/9', border: '1px solid rgba(245,158,11,0.4)' }}>
+            <div style={{ position: 'relative', borderRadius: '10px', overflow: 'hidden', aspectRatio: '16/9', border: '1px solid var(--border-color)' }}>
               <img src={originalImage.preview} alt="ref" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               <button
                 onClick={() => setOriginalImage(null)}
@@ -215,10 +215,10 @@ export default function AdminDashboard({
         {/* Base Prompt */}
         <div className="control-section" style={{ gap: '6px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span className="section-title" style={{ color: '#e2e8f0' }}>✏️ Ý tưởng / Mô tả</span>
+            <span className="section-title" style={{ color: 'var(--text-main)' }}>✏️ Ý tưởng / Mô tả</span>
             <button
               className="btn-secondary"
-              style={{ padding: '4px 8px', fontSize: '11px', color: '#fbbf24', borderColor: 'rgba(245,158,11,0.3)' }}
+              style={{ padding: '4px 8px', fontSize: '11px', color: '#ea580c', borderColor: 'rgba(234,88,12,0.3)' }}
               onClick={handleMagicPrompt}
               disabled={isMagicLoading}
             >
@@ -243,7 +243,7 @@ export default function AdminDashboard({
           { label: '💡 Ánh sáng',   key: 'LIGHTING', val: selectedLighting, set: setSelectedLighting },
         ].map(({ label, key, val, set }) => (
           <div className="control-section" key={key} style={{ gap: '6px' }}>
-            <span className="section-title" style={{ color: '#e2e8f0', fontSize: '12px' }}>{label}</span>
+            <span className="section-title" style={{ color: 'var(--text-main)', fontSize: '12px' }}>{label}</span>
             <select
               className="styled-select"
               value={val}
@@ -259,7 +259,7 @@ export default function AdminDashboard({
 
         {/* Aspect Ratio */}
         <div className="control-section" style={{ gap: '6px' }}>
-          <span className="section-title" style={{ color: '#e2e8f0', fontSize: '12px' }}>📐 Tỷ lệ khung</span>
+          <span className="section-title" style={{ color: 'var(--text-main)', fontSize: '12px' }}>📐 Tỷ lệ khung</span>
           <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
             {aspectList.map((r) => (
               <button
@@ -268,9 +268,9 @@ export default function AdminDashboard({
                 onClick={() => setAspectRatio(r)}
                 style={{
                   padding: '4px 9px', borderRadius: '7px', fontSize: '11px', fontWeight: 700,
-                  background: aspectRatio === r ? 'rgba(245,158,11,0.25)' : 'var(--bg-input)',
-                  border: `1px solid ${aspectRatio === r ? '#f59e0b' : 'var(--border-color)'}`,
-                  color: aspectRatio === r ? '#fbbf24' : 'var(--text-dim)',
+                  background: aspectRatio === r ? 'rgba(234,88,12,0.1)' : 'var(--bg-input)',
+                  border: `1px solid ${aspectRatio === r ? '#ea580c' : 'var(--border-color)'}`,
+                  color: aspectRatio === r ? '#ea580c' : 'var(--text-dim)',
                   cursor: 'pointer',
                 }}
               >{r}</button>
@@ -280,7 +280,7 @@ export default function AdminDashboard({
 
         {/* AI Provider */}
         <div className="control-section" style={{ gap: '6px' }}>
-          <span className="section-title" style={{ color: '#e2e8f0', fontSize: '12px' }}>🤖 Mô hình AI</span>
+          <span className="section-title" style={{ color: 'var(--text-main)', fontSize: '12px' }}>🤖 Mô hình AI</span>
           <div style={{ display: 'flex', gap: '6px' }}>
             {[['NANO_BANANA','Nano 🍌'],['FLUX','FLUX ⚡'],['OPENAI','OpenAI']].map(([val,lbl]) => (
               <button
@@ -289,9 +289,9 @@ export default function AdminDashboard({
                 onClick={() => setAiProvider(val)}
                 style={{
                   flex: 1, padding: '6px 4px', borderRadius: '8px', fontSize: '11px', fontWeight: 700,
-                  background: aiProvider === val ? 'rgba(245,158,11,0.2)' : 'var(--bg-input)',
-                  border: `1px solid ${aiProvider === val ? '#f59e0b' : 'var(--border-color)'}`,
-                  color: aiProvider === val ? '#fbbf24' : 'var(--text-dim)',
+                  background: aiProvider === val ? 'rgba(234,88,12,0.1)' : 'var(--bg-input)',
+                  border: `1px solid ${aiProvider === val ? '#ea580c' : 'var(--border-color)'}`,
+                  color: aiProvider === val ? '#ea580c' : 'var(--text-dim)',
                   cursor: 'pointer',
                 }}
               >{lbl}</button>
@@ -301,13 +301,13 @@ export default function AdminDashboard({
 
         {/* Số lượng ảnh */}
         <div className="control-section" style={{ gap: '6px' }}>
-          <span className="section-title" style={{ color: '#e2e8f0', fontSize: '12px' }}>🖼️ Số lượng ảnh: {numImages}</span>
+          <span className="section-title" style={{ color: 'var(--text-main)', fontSize: '12px' }}>🖼️ Số lượng ảnh: {numImages}</span>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <button className="icon-circle-btn" style={{ width: '30px', height: '30px' }}
               onClick={() => setNumImages(Math.max(1, numImages - 1))} type="button">−</button>
             <input type="range" min={1} max={4} value={numImages}
               onChange={(e) => setNumImages(Number(e.target.value))}
-              style={{ flex: 1, accentColor: '#f59e0b' }} />
+              style={{ flex: 1, accentColor: '#ea580c' }} />
             <button className="icon-circle-btn" style={{ width: '30px', height: '30px' }}
               onClick={() => setNumImages(Math.min(4, numImages + 1))} type="button">+</button>
           </div>
@@ -319,9 +319,9 @@ export default function AdminDashboard({
           className="btn-secondary"
           style={{
             width: '100%', padding: '10px', fontSize: '13px', fontWeight: 700,
-            background: 'linear-gradient(135deg, rgba(245,158,11,0.15) 0%, rgba(234,88,12,0.1) 100%)',
-            borderColor: isPreviewing ? '#f59e0b' : 'rgba(245,158,11,0.4)',
-            color: '#fbbf24',
+            background: 'linear-gradient(135deg, rgba(234,88,12,0.08) 0%, rgba(249,115,22,0.04) 100%)',
+            borderColor: isPreviewing ? '#ea580c' : 'rgba(234,88,12,0.3)',
+            color: '#ea580c',
             justifyContent: 'center',
             display: 'flex', gap: '6px', alignItems: 'center',
           }}
@@ -339,9 +339,9 @@ export default function AdminDashboard({
          ═══════════════════════════════════════════════════════════════ */}
       <div style={{
         flex: 1,
-        borderRight: '1px solid rgba(245,158,11,0.15)',
+        borderRight: '1px solid var(--border-color)',
         overflowY: 'auto',
-        background: '#080d18',
+        background: 'var(--bg-body)',
         padding: '20px',
         display: 'flex',
         flexDirection: 'column',
@@ -353,28 +353,28 @@ export default function AdminDashboard({
         <div style={{
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           paddingBottom: '14px',
-          borderBottom: '1px solid rgba(245,158,11,0.2)',
+          borderBottom: '1px solid var(--border-color)',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div style={{
               width: '38px', height: '38px', borderRadius: '12px',
-              background: 'linear-gradient(135deg, #f59e0b, #ea580c)',
+              background: 'linear-gradient(135deg, #f97316, #ea580c)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              color: '#fff', boxShadow: '0 0 18px rgba(249,115,22,0.4)',
+              color: '#fff', boxShadow: '0 4px 12px rgba(234,88,12,0.25)',
             }}>
               <ShieldCheck size={20} />
             </div>
             <div>
-              <h2 style={{ fontSize: '16px', fontWeight: 800, color: '#f8fafc', margin: 0 }}>
+              <h2 style={{ fontSize: '16px', fontWeight: 800, color: 'var(--text-main)', margin: 0 }}>
                 Chỉnh Sửa Final Prompt
                 <span style={{
                   fontSize: '10px', marginLeft: '8px',
-                  background: 'rgba(245,158,11,0.2)', color: '#fbbf24',
+                  background: 'rgba(234,88,12,0.1)', color: '#ea580c',
                   padding: '2px 8px', borderRadius: '99px',
-                  border: '1px solid rgba(245,158,11,0.4)',
+                  border: '1px solid rgba(234,88,12,0.25)', fontWeight: 700
                 }}>ADMIN EXCLUSIVE</span>
               </h2>
-              <p style={{ fontSize: '12px', color: 'rgba(251,191,36,0.6)', margin: '2px 0 0 0' }}>
+              <p style={{ fontSize: '12px', color: 'var(--text-dim)', margin: '2px 0 0 0' }}>
                 Đây là câu prompt tiếng Anh cuối cùng gửi tới AI. Admin có thể can thiệp toàn phần.
               </p>
             </div>
@@ -388,7 +388,7 @@ export default function AdminDashboard({
                 style={{ padding: '6px 12px', fontSize: '12px' }}
                 onClick={handleCopy}
               >
-                {copied ? <Check size={14} color="#4ade80" /> : <Copy size={14} />}
+                {copied ? <Check size={14} color="#16a34a" /> : <Copy size={14} />}
                 <span>{copied ? 'Đã copy!' : 'Copy Prompt'}</span>
               </button>
               <button
@@ -419,18 +419,18 @@ export default function AdminDashboard({
           }}>
             <div style={{
               width: '60px', height: '60px', borderRadius: '16px',
-              background: 'rgba(245,158,11,0.08)',
-              border: '1px dashed rgba(245,158,11,0.3)',
+              background: 'rgba(234,88,12,0.06)',
+              border: '1px dashed rgba(234,88,12,0.25)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
-              <Eye size={26} color="rgba(245,158,11,0.5)" />
+              <Eye size={26} color="rgba(234,88,12,0.6)" />
             </div>
             <div>
-              <div style={{ fontSize: '15px', fontWeight: 700, color: '#94a3b8', marginBottom: '6px' }}>
+              <div style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-main)', marginBottom: '6px' }}>
                 Chưa có Final Prompt
               </div>
               <div style={{ fontSize: '12px', color: 'var(--text-dim)', maxWidth: '280px', lineHeight: 1.6 }}>
-                Nhập mô tả ở cột trái, sau đó bấm <strong style={{ color: '#fbbf24' }}>👁 Xem trước Final Prompt</strong> để Gemini AI tổng hợp và hiển thị câu prompt kỹ thuật ở đây để bạn chỉnh sửa.
+                Nhập mô tả ở cột trái, sau đó bấm <strong style={{ color: '#ea580c' }}>👁 Xem trước Final Prompt</strong> để Gemini AI tổng hợp và hiển thị câu prompt kỹ thuật ở đây để bạn chỉnh sửa.
               </div>
             </div>
           </div>
@@ -441,14 +441,15 @@ export default function AdminDashboard({
           <>
             {/* Config info bar */}
             <div style={{
-              background: 'rgba(15,23,42,0.8)', borderRadius: '10px',
+              background: '#ffffff', borderRadius: '10px',
               padding: '10px 14px', display: 'flex', gap: '16px', flexWrap: 'wrap',
-              fontSize: '12px', border: '1px solid rgba(255,255,255,0.06)',
+              fontSize: '12px', border: '1px solid var(--border-color)',
+              boxShadow: 'var(--shadow-subtle)'
             }}>
-              <div><span style={{ color: 'var(--text-dim)' }}>Mô hình: </span><strong style={{ color: '#f59e0b' }}>{aiProvider}</strong></div>
-              <div><span style={{ color: 'var(--text-dim)' }}>Tỷ lệ: </span><strong style={{ color: '#f8fafc' }}>{aspectRatio}</strong></div>
-              <div><span style={{ color: 'var(--text-dim)' }}>Số ảnh: </span><strong style={{ color: '#f8fafc' }}>{numImages}</strong></div>
-              <div><span style={{ color: 'var(--text-dim)' }}>Ảnh gốc: </span><strong style={{ color: originalImage ? '#4ade80' : '#94a3b8' }}>{originalImage ? '✅ Đính kèm' : 'Text only'}</strong></div>
+              <div><span style={{ color: 'var(--text-dim)' }}>Mô hình: </span><strong style={{ color: 'var(--primary)' }}>{aiProvider}</strong></div>
+              <div><span style={{ color: 'var(--text-dim)' }}>Tỷ lệ: </span><strong style={{ color: 'var(--text-main)' }}>{aspectRatio}</strong></div>
+              <div><span style={{ color: 'var(--text-dim)' }}>Số ảnh: </span><strong style={{ color: 'var(--text-main)' }}>{numImages}</strong></div>
+              <div><span style={{ color: 'var(--text-dim)' }}>Ảnh gốc: </span><strong style={{ color: originalImage ? '#16a34a' : 'var(--text-dim)' }}>{originalImage ? '✅ Đính kèm' : 'Text only'}</strong></div>
               <div style={{ marginLeft: 'auto', color: 'var(--text-dim)' }}>{finalPromptDraft.length} ký tự</div>
             </div>
 
@@ -462,10 +463,10 @@ export default function AdminDashboard({
                 fontSize: '13px',
                 lineHeight: '1.65',
                 fontFamily: '"Courier New", Courier, monospace',
-                border: '1.5px solid rgba(234,88,12,0.5)',
-                backgroundColor: '#060a14',
+                border: '1.5px solid var(--primary)',
+                backgroundColor: '#ffffff',
                 borderRadius: '12px',
-                color: '#e2e8f0',
+                color: 'var(--text-main)',
                 resize: 'vertical',
                 flex: 1,
               }}
@@ -498,8 +499,6 @@ export default function AdminDashboard({
                     className="btn-secondary"
                     style={{
                       padding: '5px 10px', fontSize: '11px', borderRadius: '7px',
-                      borderColor: 'rgba(245,158,11,0.25)',
-                      color: '#fbbf24',
                     }}
                     onClick={() => handleAppend(kw.text)}
                   >
@@ -517,12 +516,12 @@ export default function AdminDashboard({
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
                 width: '100%', padding: '14px',
                 background: isRendering
-                  ? 'rgba(245,158,11,0.4)'
-                  : 'linear-gradient(135deg, #f59e0b 0%, #ea580c 100%)',
+                  ? 'rgba(234,88,12,0.4)'
+                  : 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
                 border: 'none', borderRadius: '12px',
                 color: '#fff', fontSize: '14px', fontWeight: 800,
                 cursor: isRendering ? 'not-allowed' : 'pointer',
-                boxShadow: isRendering ? 'none' : '0 6px 24px rgba(245,158,11,0.45)',
+                boxShadow: isRendering ? 'none' : '0 4px 14px rgba(234,88,12,0.3)',
                 transition: 'all 0.2s',
                 letterSpacing: '0.3px',
               }}
@@ -542,9 +541,9 @@ export default function AdminDashboard({
             style={{
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
               padding: '12px', marginTop: 'auto',
-              background: 'rgba(245,158,11,0.12)',
-              border: '1px dashed rgba(245,158,11,0.3)', borderRadius: '12px',
-              color: 'rgba(251,191,36,0.7)', fontSize: '13px', fontWeight: 700,
+              background: 'rgba(234,88,12,0.08)',
+              border: '1px dashed rgba(234,88,12,0.3)', borderRadius: '12px',
+              color: '#ea580c', fontSize: '13px', fontWeight: 700,
               cursor: 'pointer',
             }}
             onClick={handleSubmit}
@@ -562,18 +561,19 @@ export default function AdminDashboard({
       <div style={{
         width: '380px', minWidth: '300px',
         overflowY: 'auto',
-        background: '#07090f',
+        background: '#ffffff',
+        borderLeft: '1px solid var(--border-color)',
         padding: '16px',
         display: 'flex',
         flexDirection: 'column',
         gap: '14px',
       }}>
         <div style={{
-          fontSize: '13px', fontWeight: 700, color: '#94a3b8',
+          fontSize: '13px', fontWeight: 700, color: 'var(--text-main)',
           display: 'flex', alignItems: 'center', gap: '8px',
-          paddingBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.06)',
+          paddingBottom: '12px', borderBottom: '1px solid var(--border-color)',
         }}>
-          <ImageIcon size={16} color="#f59e0b" />
+          <ImageIcon size={16} color="#ea580c" />
           Kết Quả Render
         </div>
 
@@ -581,7 +581,7 @@ export default function AdminDashboard({
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '14px', flex: 1, paddingTop: '40px' }}>
             <div className="spinner-ring" />
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '14px', fontWeight: 700, color: '#f8fafc' }}>Đang khởi tạo phối cảnh...</div>
+              <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text-main)' }}>Đang khởi tạo phối cảnh...</div>
               <div style={{ fontSize: '12px', color: 'var(--text-dim)', marginTop: '4px' }}>AI Engine đang xử lý prompt của Admin</div>
             </div>
           </div>
@@ -590,13 +590,13 @@ export default function AdminDashboard({
             {/* Final prompt used */}
             {renderResult.finalPrompt && (
               <div style={{
-                background: 'rgba(15,23,42,0.8)', borderRadius: '10px',
+                background: 'var(--bg-body)', borderRadius: '10px',
                 padding: '10px 12px', fontSize: '11px', color: 'var(--text-dim)',
-                border: '1px solid rgba(245,158,11,0.15)',
+                border: '1px solid var(--border-color)',
                 fontFamily: 'monospace', lineHeight: 1.5,
                 maxHeight: '100px', overflowY: 'auto',
               }}>
-                <div style={{ color: '#fbbf24', fontWeight: 700, marginBottom: '4px', fontFamily: 'sans-serif' }}>
+                <div style={{ color: 'var(--primary)', fontWeight: 700, marginBottom: '4px', fontFamily: 'sans-serif' }}>
                   ✅ Prompt đã được dùng:
                 </div>
                 {renderResult.finalPrompt}
@@ -605,7 +605,7 @@ export default function AdminDashboard({
 
             {/* Images */}
             {renderResult.images?.map((imgUrl, i) => (
-              <div key={i} style={{ borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(245,158,11,0.25)' }}>
+              <div key={i} style={{ borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-subtle)' }}>
                 <img
                   src={imgUrl}
                   alt={`render-${i}`}
@@ -613,13 +613,14 @@ export default function AdminDashboard({
                   onClick={() => onSendToCameraAngle && onSendToCameraAngle(imgUrl)}
                 />
                 <div style={{
-                  padding: '8px 12px', background: 'rgba(15,23,42,0.9)',
+                  padding: '8px 12px', background: '#ffffff',
                   display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                  borderTop: '1px solid var(--border-color)'
                 }}>
                   <span style={{ fontSize: '11px', color: 'var(--text-dim)' }}>Ảnh #{i + 1}</span>
                   <a
                     href={imgUrl} download={`admin-render-${i + 1}.jpg`} target="_blank" rel="noreferrer"
-                    style={{ fontSize: '11px', color: '#fbbf24', textDecoration: 'none', fontWeight: 700 }}
+                    style={{ fontSize: '11px', color: '#ea580c', textDecoration: 'none', fontWeight: 700 }}
                   >
                     ↓ Tải về
                   </a>
@@ -635,13 +636,13 @@ export default function AdminDashboard({
           }}>
             <div style={{
               width: '50px', height: '50px', borderRadius: '12px',
-              background: 'rgba(245,158,11,0.07)',
-              border: '1px dashed rgba(245,158,11,0.25)',
+              background: 'rgba(234,88,12,0.06)',
+              border: '1px dashed rgba(234,88,12,0.25)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
-              <Sparkles size={22} color="rgba(245,158,11,0.4)" />
+              <Sparkles size={22} color="rgba(234,88,12,0.5)" />
             </div>
-            <div style={{ fontSize: '13px', color: '#64748b' }}>
+            <div style={{ fontSize: '13px', color: 'var(--text-dim)' }}>
               Kết quả render của Admin sẽ hiển thị tại đây
             </div>
           </div>
@@ -650,3 +651,4 @@ export default function AdminDashboard({
     </div>
   );
 }
+

@@ -44,9 +44,9 @@ export default function AdminPromptModal({
           width: '780px',
           maxWidth: '92vw',
           maxHeight: '88vh',
-          backgroundColor: '#0f172a',
-          border: '2px solid rgba(249, 115, 22, 0.4)',
-          boxShadow: '0 20px 60px rgba(0, 0, 0, 0.7), 0 0 30px rgba(249, 115, 22, 0.2)',
+          backgroundColor: '#ffffff',
+          border: '1px solid var(--border-color)',
+          boxShadow: '0 20px 40px -10px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(15, 23, 42, 0.05)',
           borderRadius: '16px',
           padding: '24px',
           display: 'flex',
@@ -61,7 +61,7 @@ export default function AdminPromptModal({
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div 
               style={{ 
-                background: 'linear-gradient(135deg, #f59e0b 0%, #ea580c 100%)', 
+                background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)', 
                 width: '36px', 
                 height: '36px', 
                 borderRadius: '10px', 
@@ -69,15 +69,15 @@ export default function AdminPromptModal({
                 alignItems: 'center', 
                 justifyContent: 'center',
                 color: '#fff',
-                boxShadow: '0 0 16px rgba(245, 158, 11, 0.4)'
+                boxShadow: '0 4px 12px rgba(234, 88, 12, 0.25)'
               }}
             >
               <ShieldCheck size={20} />
             </div>
             <div>
-              <h2 style={{ fontSize: '17px', fontWeight: 800, color: '#f8fafc', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <h2 style={{ fontSize: '17px', fontWeight: 800, color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '8px', margin: 0 }}>
                 Phê Duyệt & Tinh Chỉnh Prompt Cuối Cùng
-                <span style={{ fontSize: '11px', background: 'rgba(245, 158, 11, 0.2)', color: '#fbbf24', padding: '2px 8px', borderRadius: '99px', border: '1px solid rgba(245, 158, 11, 0.4)' }}>
+                <span style={{ fontSize: '11px', background: 'rgba(234, 88, 12, 0.1)', color: '#ea580c', padding: '2px 8px', borderRadius: '99px', border: '1px solid rgba(234, 88, 12, 0.25)', fontWeight: 700 }}>
                   QUYỀN ADMIN
                 </span>
               </h2>
@@ -92,16 +92,16 @@ export default function AdminPromptModal({
         </div>
 
         {/* Thông tin cấu hình hiện tại */}
-        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', background: 'var(--bg-input)', padding: '10px 14px', borderRadius: '10px', fontSize: '12px' }}>
+        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', background: 'var(--bg-input)', padding: '10px 14px', borderRadius: '10px', fontSize: '12px', border: '1px solid var(--border-color)' }}>
           <div><strong style={{ color: 'var(--text-dim)' }}>Mô hình AI:</strong> <span style={{ color: 'var(--primary)', fontWeight: 700 }}>{payload?.aiProvider || 'NANO_BANANA'}</span></div>
-          <div><strong style={{ color: 'var(--text-dim)' }}>Tỷ lệ:</strong> <span>{payload?.aspectRatio || '16:9'}</span></div>
-          <div><strong style={{ color: 'var(--text-dim)' }}>Ảnh gốc:</strong> <span>{payload?.originalImageUrl ? '✅ Đã đính kèm bản vẽ 3D' : 'Chỉ dùng Text'}</span></div>
+          <div><strong style={{ color: 'var(--text-dim)' }}>Tỷ lệ:</strong> <span style={{ color: 'var(--text-main)' }}>{payload?.aspectRatio || '16:9'}</span></div>
+          <div><strong style={{ color: 'var(--text-dim)' }}>Ảnh gốc:</strong> <span style={{ color: 'var(--text-main)' }}>{payload?.originalImageUrl ? '✅ Đã đính kèm bản vẽ 3D' : 'Chỉ dùng Text'}</span></div>
         </div>
 
         {/* Textarea chỉnh sửa Prompt */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <label style={{ fontSize: '13px', fontWeight: 700, color: '#e2e8f0' }}>
+            <label style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-main)' }}>
               Final Prompt tiếng Anh (Đã qua xử lý bởi Gemini Vision & LLM):
             </label>
             <span style={{ fontSize: '11px', color: 'var(--text-dim)' }}>
@@ -117,8 +117,9 @@ export default function AdminPromptModal({
               fontSize: '13px', 
               lineHeight: '1.6', 
               fontFamily: 'monospace',
-              border: '1px solid #ea580c',
-              backgroundColor: '#090d16'
+              border: '1.5px solid var(--primary)',
+              backgroundColor: '#ffffff',
+              color: 'var(--text-main)'
             }}
           />
         </div>
@@ -161,8 +162,8 @@ export default function AdminPromptModal({
               margin: 0, 
               padding: '10px 20px', 
               fontSize: '13.5px',
-              background: 'linear-gradient(135deg, #f59e0b 0%, #ea580c 100%)',
-              boxShadow: '0 4px 18px rgba(245, 158, 11, 0.4)'
+              background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+              boxShadow: '0 4px 14px rgba(234, 88, 12, 0.3)'
             }}
             onClick={handleConfirm}
             disabled={isRendering || !editedPrompt.trim()}

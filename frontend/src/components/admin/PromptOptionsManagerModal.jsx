@@ -87,35 +87,35 @@ export default function PromptOptionsManagerModal({ isOpen, onClose, onOptionUpd
           width: '840px',
           maxWidth: '92vw',
           maxHeight: '88vh',
-          backgroundColor: '#0c101a',
-          border: '1.5px solid rgba(245, 158, 11, 0.4)',
+          backgroundColor: '#ffffff',
+          border: '1px solid var(--border-color)',
           borderRadius: '16px',
           padding: '24px',
           display: 'flex',
           flexDirection: 'column',
           gap: '16px',
-          boxShadow: '0 20px 60px rgba(0,0,0,0.8), 0 0 30px rgba(245, 158, 11, 0.15)',
+          boxShadow: '0 20px 40px -10px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(15, 23, 42, 0.05)',
           overflow: 'hidden'
         }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '14px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--border-color)', paddingBottom: '14px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div style={{
-              background: 'linear-gradient(135deg, #f59e0b, #ea580c)',
+              background: 'linear-gradient(135deg, #f97316, #ea580c)',
               color: '#fff',
               padding: '8px',
               borderRadius: '10px',
               display: 'flex',
-              boxShadow: '0 0 14px rgba(245, 158, 11, 0.4)'
+              boxShadow: '0 4px 12px rgba(234, 88, 12, 0.25)'
             }}>
               <Layers size={18} />
             </div>
             <div>
-              <h2 style={{ fontSize: '17px', fontWeight: 800, color: '#f8fafc', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <h2 style={{ fontSize: '17px', fontWeight: 800, color: 'var(--text-main)', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
                 Quản Lý Thư Viện Prompt (Admin CMS)
-                <span style={{ fontSize: '10px', background: 'rgba(245, 158, 11, 0.2)', color: '#fbbf24', padding: '2px 8px', borderRadius: '99px', border: '1px solid rgba(245, 158, 11, 0.4)' }}>
+                <span style={{ fontSize: '10px', background: 'rgba(234, 88, 12, 0.1)', color: '#ea580c', padding: '2px 8px', borderRadius: '99px', border: '1px solid rgba(234, 88, 12, 0.25)', fontWeight: 700 }}>
                   QUYỀN ADMIN
                 </span>
               </h2>
@@ -130,7 +130,7 @@ export default function PromptOptionsManagerModal({ isOpen, onClose, onOptionUpd
         </div>
 
         {/* Tab Selector */}
-        <div style={{ display: 'flex', gap: '8px', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '10px' }}>
+        <div style={{ display: 'flex', gap: '8px', borderBottom: '1px solid var(--border-color)', paddingBottom: '10px' }}>
           {tabs.map((t) => (
             <button
               key={t.key}
@@ -142,9 +142,9 @@ export default function PromptOptionsManagerModal({ isOpen, onClose, onOptionUpd
                 fontSize: '12.5px',
                 fontWeight: 700,
                 border: '1px solid',
-                borderColor: activeTab === t.key ? '#f59e0b' : 'rgba(255,255,255,0.08)',
-                background: activeTab === t.key ? 'rgba(245, 158, 11, 0.15)' : 'var(--bg-input)',
-                color: activeTab === t.key ? '#fbbf24' : 'var(--text-muted)',
+                borderColor: activeTab === t.key ? '#ea580c' : 'var(--border-color)',
+                background: activeTab === t.key ? 'rgba(234, 88, 12, 0.08)' : 'var(--bg-card)',
+                color: activeTab === t.key ? '#ea580c' : 'var(--text-muted)',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
@@ -154,7 +154,8 @@ export default function PromptOptionsManagerModal({ isOpen, onClose, onOptionUpd
               <span>{t.label}</span>
               <span style={{
                 fontSize: '10px',
-                background: activeTab === t.key ? 'rgba(245, 158, 11, 0.3)' : 'rgba(255,255,255,0.08)',
+                background: activeTab === t.key ? 'rgba(234, 88, 12, 0.15)' : 'var(--bg-input)',
+                color: activeTab === t.key ? '#ea580c' : 'var(--text-dim)',
                 padding: '1px 6px',
                 borderRadius: '99px'
               }}>
@@ -166,15 +167,15 @@ export default function PromptOptionsManagerModal({ isOpen, onClose, onOptionUpd
 
         {/* Form thêm mới */}
         <form onSubmit={handleAddOption} style={{
-          background: 'rgba(15, 23, 42, 0.7)',
-          border: '1px dashed rgba(245, 158, 11, 0.35)',
+          background: 'var(--bg-body)',
+          border: '1px dashed rgba(234, 88, 12, 0.4)',
           borderRadius: '12px',
           padding: '14px',
           display: 'flex',
           flexDirection: 'column',
           gap: '10px'
         }}>
-          <div style={{ fontSize: '12px', fontWeight: 800, color: '#fbbf24', display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <div style={{ fontSize: '12px', fontWeight: 800, color: '#ea580c', display: 'flex', alignItems: 'center', gap: '6px' }}>
             <Plus size={14} />
             <span>Thêm mới vào danh mục: {tabs.find(t => t.key === activeTab)?.label}</span>
           </div>
@@ -192,7 +193,7 @@ export default function PromptOptionsManagerModal({ isOpen, onClose, onOptionUpd
                   fontSize: '12px',
                   borderRadius: '8px',
                   border: '1px solid var(--border-color)',
-                  background: 'var(--bg-input)',
+                  background: 'var(--bg-card)',
                   color: 'var(--text-main)',
                   outline: 'none'
                 }}
@@ -210,7 +211,7 @@ export default function PromptOptionsManagerModal({ isOpen, onClose, onOptionUpd
                   fontSize: '12px',
                   borderRadius: '8px',
                   border: '1px solid var(--border-color)',
-                  background: 'var(--bg-input)',
+                  background: 'var(--bg-card)',
                   color: 'var(--text-main)',
                   outline: 'none'
                 }}
@@ -221,7 +222,7 @@ export default function PromptOptionsManagerModal({ isOpen, onClose, onOptionUpd
               disabled={isSubmitting}
               style={{
                 padding: '8px 14px',
-                background: 'linear-gradient(135deg, #f59e0b, #ea580c)',
+                background: 'linear-gradient(135deg, #f97316, #ea580c)',
                 color: '#fff',
                 border: 'none',
                 borderRadius: '8px',
@@ -231,7 +232,8 @@ export default function PromptOptionsManagerModal({ isOpen, onClose, onOptionUpd
                 display: 'flex',
                 alignItems: 'center',
                 gap: '4px',
-                whiteSpace: 'nowrap'
+                whiteSpace: 'nowrap',
+                boxShadow: '0 2px 8px rgba(234, 88, 12, 0.25)'
               }}
             >
               <Plus size={14} />
@@ -255,18 +257,19 @@ export default function PromptOptionsManagerModal({ isOpen, onClose, onOptionUpd
               <div
                 key={item.id}
                 style={{
-                  background: 'var(--bg-card)',
+                  background: '#ffffff',
                   borderRadius: '10px',
-                  border: '1px solid rgba(255,255,255,0.06)',
+                  border: '1px solid var(--border-color)',
                   padding: '10px 14px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  gap: '12px'
+                  gap: '12px',
+                  boxShadow: 'var(--shadow-subtle)'
                 }}
               >
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: '13px', fontWeight: 700, color: '#f1f5f9' }}>
+                  <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-main)' }}>
                     {item.displayName}
                   </div>
                   <div style={{ fontSize: '11.5px', color: 'var(--text-dim)', fontFamily: 'monospace', marginTop: '2px', wordBreak: 'break-all' }}>
@@ -279,9 +282,9 @@ export default function PromptOptionsManagerModal({ isOpen, onClose, onOptionUpd
                   onClick={() => handleDeleteOption(item.id, item.displayName)}
                   title="Xóa tùy chọn này"
                   style={{
-                    background: 'rgba(239, 68, 68, 0.1)',
-                    border: '1px solid rgba(239, 68, 68, 0.25)',
-                    color: '#f87171',
+                    background: 'rgba(239, 68, 68, 0.08)',
+                    border: '1px solid rgba(239, 68, 68, 0.2)',
+                    color: '#ef4444',
                     borderRadius: '6px',
                     padding: '6px',
                     cursor: 'pointer',
