@@ -1,11 +1,76 @@
 // API service kết nối với Backend Spring Boot
 const API_BASE = ''; // Dùng relative path để Vite proxy sang http://localhost:8080
+const TOKEN_KEY = 'render_ai_jwt_token';
+
+// Quản lý JWT Token trong SessionStorage / LocalStorage
+export const getAuthToken = () => {
+  try {
+    return sessionStorage.getItem(TOKEN_KEY) || localStorage.getItem(TOKEN_KEY) || null;
+  } catch {
+    return null;
+  }
+};
+
+export const setAuthToken = (token) => {
+  try {
+    if (token) {
+      sessionStorage.setItem(TOKEN_KEY, token);
+    }
+  } catch (e) {
+    console.warn('Không thể lưu JWT token:', e);
+  }
+};
+
+export const clearAuthToken = () => {
+  try {
+    sessionStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(TOKEN_KEY);
+  } catch (e) {
+    console.warn('Không thể xóa JWT token:', e);
+  }
+};
+
+// Trợ giúp tự động gắn Authorization Header
+const getAuthHeaders = (extraHeaders = {}) => {
+  const token = getAuthToken();
+  const headers = { ...extraHeaders };
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+  return headers;
+};
 
 export const apiService = {
+  getAuthToken,
+  setAuthToken,
+  clearAuthToken,
+
+  // Lấy thông tin tài khoản hiện tại từ JWT Token
+  async getCurrentUser() {
+    const token = getAuthToken();
+    if (!token) return null;
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/me`, {
+        headers: getAuthHeaders(),
+      });
+      if (!res.ok) {
+        clearAuthToken();
+        return null;
+      }
+      const data = await res.json();
+      return data.user || null;
+    } catch (err) {
+      console.warn('Lỗi kiểm tra phiên JWT:', err);
+      return null;
+    }
+  },
+
   // Lấy các tuỳ chọn Style, Context, Lighting từ Oracle DB
   async getPromptOptions() {
     try {
-      const res = await fetch(`${API_BASE}/api/prompt-options`);
+      const res = await fetch(`${API_BASE}/api/prompt-options`, {
+        headers: getAuthHeaders(),
+      });
       if (!res.ok) throw new Error('Không thể tải danh sách tùy chọn');
       const data = await res.json();
       return data.options || {};
@@ -43,7 +108,7 @@ export const apiService = {
   async createPromptOption(payload) {
     const res = await fetch(`${API_BASE}/api/prompt-options`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
       body: JSON.stringify(payload),
     });
     if (!res.ok) throw new Error('Không thể thêm tùy chọn mới');
@@ -54,6 +119,7 @@ export const apiService = {
   async deletePromptOption(id) {
     const res = await fetch(`${API_BASE}/api/prompt-options/${id}`, {
       method: 'DELETE',
+      headers: getAuthHeaders(),
     });
     if (!res.ok) throw new Error('Không thể xóa tùy chọn');
     return await res.json();
@@ -66,6 +132,7 @@ export const apiService = {
 
     const res = await fetch(`${API_BASE}/api/upload`, {
       method: 'POST',
+      headers: getAuthHeaders(),
       body: formData,
     });
 
@@ -80,7 +147,7 @@ export const apiService = {
   async generateMagicPrompt(userInput) {
     const res = await fetch(`${API_BASE}/api/ai/generate-prompt`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
       body: JSON.stringify({ userInput }),
     });
 
@@ -95,7 +162,7 @@ export const apiService = {
   async createRender(payload) {
     const res = await fetch(`${API_BASE}/api/render/create`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
       body: JSON.stringify(payload),
     });
 
@@ -108,7 +175,9 @@ export const apiService = {
 
   // Lấy lịch sử render
   async getRenderHistory(userId = 1) {
-    const res = await fetch(`${API_BASE}/api/render/history/${userId}`);
+    const res = await fetch(`${API_BASE}/api/render/history/${userId}`, {
+      headers: getAuthHeaders(),
+    });
     if (!res.ok) throw new Error('Không thể tải lịch sử render');
     return await res.json();
   },
@@ -116,7 +185,9 @@ export const apiService = {
   // Lấy danh sách người dùng và phân quyền
   async getUsers() {
     try {
-      const res = await fetch(`${API_BASE}/api/users`);
+      const res = await fetch(`${API_BASE}/api/users`, {
+        headers: getAuthHeaders(),
+      });
       if (!res.ok) return [];
       return await res.json();
     } catch (err) {
@@ -125,7 +196,7 @@ export const apiService = {
     }
   },
 
-  // Đăng nhập hệ thống (Phân quyền Admin / User)
+  // Đăng nhập hệ thống (Phân quyền Admin / User & nhận JWT Access Token)
   async login(username, password) {
     const res = await fetch(`${API_BASE}/api/auth/login`, {
       method: 'POST',
@@ -137,10 +208,14 @@ export const apiService = {
     if (!res.ok) {
       throw new Error(data.message || 'Đăng nhập không thành công');
     }
-    return data; // { success: true, user: { id, username, email, role } }
+
+    if (data.accessToken) {
+      setAuthToken(data.accessToken);
+    }
+    return data; // { success: true, accessToken, user: { id, username, email, role } }
   },
 
-  // Đăng ký tài khoản người dùng
+  // Đăng ký tài khoản người dùng & nhận JWT Access Token
   async register(username, email, password) {
     const res = await fetch(`${API_BASE}/api/auth/register`, {
       method: 'POST',
@@ -152,6 +227,10 @@ export const apiService = {
     if (!res.ok) {
       throw new Error(data.message || 'Đăng ký không thành công');
     }
+
+    if (data.accessToken) {
+      setAuthToken(data.accessToken);
+    }
     return data;
   },
 
@@ -159,7 +238,7 @@ export const apiService = {
   async previewPrompt(payload) {
     const res = await fetch(`${API_BASE}/api/render/preview-prompt`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
       body: JSON.stringify(payload),
     });
 
@@ -175,7 +254,9 @@ export const apiService = {
 
   // Dành riêng cho ADMIN: Lấy tất cả tác vụ của các user để xem prompt và ảnh đã ren
   async getAllTasksForAdmin() {
-    const res = await fetch(`${API_BASE}/api/render/admin/all-tasks`);
+    const res = await fetch(`${API_BASE}/api/render/admin/all-tasks`, {
+      headers: getAuthHeaders(),
+    });
     if (!res.ok) throw new Error('Không thể tải danh sách tác vụ của users');
     return await res.json();
   },
@@ -184,6 +265,7 @@ export const apiService = {
   async deleteTask(taskId) {
     const res = await fetch(`${API_BASE}/api/render/task/${taskId}`, {
       method: 'DELETE',
+      headers: getAuthHeaders(),
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) {
@@ -196,7 +278,7 @@ export const apiService = {
   async deleteTasksBatch(taskIds) {
     const res = await fetch(`${API_BASE}/api/render/tasks/delete-batch`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
       body: JSON.stringify(taskIds),
     });
     const data = await res.json().catch(() => ({}));
@@ -206,5 +288,3 @@ export const apiService = {
     return data;
   }
 };
-
-

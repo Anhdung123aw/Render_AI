@@ -584,8 +584,8 @@ export default function AdminPromptEditor({
                       padding: "12px 16px",
                       borderRadius: "12px",
                       cursor: "pointer",
-                      background: isCardSelected ? "rgba(234, 88, 12, 0.05)" : "#ffffff",
-                      border: isCardSelected ? "1.5px solid var(--primary)" : "1px solid var(--border-color)",
+                      background: isCardSelected ? "rgba(234, 88, 12, 0.08)" : "var(--bg-input)",
+                      border: isCardSelected ? "1.5px solid var(--primary)" : "1px solid #cbd5e1",
                       boxShadow: "0 2px 8px rgba(15, 23, 42, 0.04)",
                       transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
                       display: "flex",
@@ -596,14 +596,14 @@ export default function AdminPromptEditor({
                     onMouseEnter={e => {
                       if (!isCardSelected) {
                         e.currentTarget.style.borderColor = "var(--primary)";
-                        e.currentTarget.style.background = "rgba(234, 88, 12, 0.03)";
+                        e.currentTarget.style.background = "#e2e8f0";
                       }
                       e.currentTarget.style.transform = "translateY(-1px)";
                     }}
                     onMouseLeave={e => {
                       if (!isCardSelected) {
-                        e.currentTarget.style.borderColor = "var(--border-color)";
-                        e.currentTarget.style.background = "#ffffff";
+                        e.currentTarget.style.borderColor = "#cbd5e1";
+                        e.currentTarget.style.background = "var(--bg-input)";
                       }
                       e.currentTarget.style.transform = "translateY(0)";
                     }}
@@ -637,7 +637,7 @@ export default function AdminPromptEditor({
                               width: "66px",
                               height: "54px",
                               borderRadius: "8px",
-                              background: "#f1f5f9",
+                              background: "#ffffff",
                               border: "1px solid #bfdbfe",
                               overflow: "hidden"
                             }}
@@ -665,7 +665,7 @@ export default function AdminPromptEditor({
                               width: "66px",
                               height: "54px",
                               borderRadius: "8px",
-                              background: "#f1f5f9",
+                              background: "#ffffff",
                               border: "1px solid #fed7aa",
                               overflow: "hidden"
                             }}
@@ -691,8 +691,8 @@ export default function AdminPromptEditor({
                           width: "72px",
                           height: "54px",
                           borderRadius: "8px",
-                          background: "#f1f5f9",
-                          border: "1px solid var(--border-color)",
+                          background: "#ffffff",
+                          border: "1px solid #cbd5e1",
                           overflow: "hidden",
                           display: "flex",
                           alignItems: "center",
@@ -728,7 +728,7 @@ export default function AdminPromptEditor({
                           </span>
                           <span style={{
                             fontSize: "10px", padding: "1px 6px", borderRadius: "4px",
-                            background: "var(--bg-input)", color: "var(--text-muted)", fontWeight: 600
+                            background: "#ffffff", border: "1px solid #e2e8f0", color: "var(--text-muted)", fontWeight: 600
                           }}>
                             {task.aiProvider || "NANO_BANANA"}
                           </span>
@@ -755,7 +755,7 @@ export default function AdminPromptEditor({
                             Có ảnh gốc
                           </span>
                         ) : (
-                          <span style={{ fontSize: "10px", padding: "1px 6px", borderRadius: "4px", background: "#f1f5f9", color: "var(--text-dim)" }}>
+                          <span style={{ fontSize: "10px", padding: "1px 6px", borderRadius: "4px", background: "#ffffff", border: "1px solid #e2e8f0", color: "var(--text-dim)" }}>
                             Text Prompt
                           </span>
                         )}

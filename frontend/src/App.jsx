@@ -93,6 +93,7 @@ export default function App() {
   // Đăng xuất
   const handleLogout = () => {
     setCurrentUser(null);
+    apiService.clearAuthToken();
     try {
       sessionStorage.removeItem('render_ai_user');
       localStorage.removeItem('render_ai_user');
